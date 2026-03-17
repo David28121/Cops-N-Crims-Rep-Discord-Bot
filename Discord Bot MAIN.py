@@ -1,7 +1,5 @@
 import time
 import json
-import asyncio
-import aiohttp
 import discord
 from discord.ext import commands
 import os
@@ -9,6 +7,7 @@ import ProjectUtils as pu #hahahha so funny. im 17 doing this shit
 import ErrorCodes as ec
 import io
 from datetime import datetime
+import dotenv
 
 
 intents = discord.Intents.default()
@@ -17,12 +16,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 script_dir = os.path.dirname(__file__)
 
-keyspath = os.path.join(script_dir, "KEYS.json")
-with open(keyspath, "r") as f:
-    Keys = json.load(f)
+dotenv.load_dotenv(os.path.join(script_dir, "keys.env"))
 
-Hypixel_API_Key = Keys["Hypixel_API_Key"]
-Discord_Bot_Token = Keys["Discord_Bot_Token"]
+Hypixel_API_Key = str(os.getenv('HYPIXEL_API_KEY'))
+Discord_Bot_Token = str(os.getenv('DISCORD_TOKEN'))
 
 linkedplayerspath = os.path.join(script_dir, "LinkedPlayers.json")
 with open(linkedplayerspath, "r") as f:
