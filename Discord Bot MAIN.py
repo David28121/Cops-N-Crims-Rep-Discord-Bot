@@ -188,12 +188,6 @@ async def rep(ctx, username:str = None, type:str = None, reason:str = None):
     if uuid == ec.no_UUID_attached.get("errorcode"): #errorcode 201. skips 202 as it is very unlikely for 201 to trigger
         await ctx.send("Please enter a valid username")
         return
-    
-    realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
-
-    if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
-        await ctx.send(f"{username} is a nick or invalid hypixel player")
-        return
 
     if discordid in playerreputationOutgoingReps:
         personspastreps = playerreputationOutgoingReps.get(discordid)
@@ -206,7 +200,14 @@ async def rep(ctx, username:str = None, type:str = None, reason:str = None):
                 await ctx.send(f"You already have a outstanding {typeofrep}. Expires <t:{repexpires}:R>")
                 return
     else:
+        realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
+
+        if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
+            await ctx.send(f"{username} is a nick or invalid hypixel player")
+            return
         playerreputationOutgoingReps[discordid] = {}
+
+
     
     if uuid in playerreputationPlayerRep:  #check database to see if the player has rep, if not create a default data structure for the person
         repdata = playerreputationPlayerRep.get(uuid)
