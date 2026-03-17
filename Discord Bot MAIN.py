@@ -150,23 +150,21 @@ async def currentrep(ctx, username:str = None):
         await ctx.send("Please enter a valid username")
         return
 
-    realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
-
-    if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
-        await ctx.send(f"{username} is a nick or invalid hypixel player")
-        return
-    
-    if uuid not in playerreputation:
+    if uuid not in playerreputationPlayerRep:
+        realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
+        if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
+            await ctx.send(f"{username} is a nick or invalid hypixel player")
+            return
         await ctx.send(f"{username} has no reputation. Feel free to be the first!")
         return
     
-    currep = playerreputation.get(uuid).get("Rep")
+    currep = playerreputationPlayerRep.get(uuid).get("rep")
 
     await ctx.send(f"{username} has {currep} rep")
     return
 
 @bot.command(help="rep posistively or negatively the player provided")
-async def rep(ctx, username:str = None, type:str = None, reason:str = None):
+async def rep(ctx, username:str = None, type:str = None,*, reason:str = None):
 
     discordid = str(ctx.author.id)
 
@@ -197,7 +195,7 @@ async def rep(ctx, username:str = None, type:str = None, reason:str = None):
             typeofrep = reportdata.get("repstyle")
             repexpires = lastreport + 604800
             if int(time.time()) < repexpires:
-                await ctx.send(f"You already have a outstanding {typeofrep}. Expires <t:{repexpires}:R>")
+                await ctx.send(f"You already have a outstanding {typeofrep} rep. Expires <t:{repexpires}:R>")
                 return
     else:
         realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
