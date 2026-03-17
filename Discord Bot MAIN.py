@@ -7,6 +7,9 @@ from discord.ext import commands
 import os
 import ProjectUtils as pu #hahahha so funny. im 17 doing this shit
 import ErrorCodes as ec
+import io
+from datetime import datetime
+
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -43,7 +46,7 @@ playerreputationOutgoingReps = playerreputation["PastReps"] #they expire after 3
 # ie timestamps = playerreputaion.get("Timestamps")
 
 @bot.command(hidden=True)
-async def dev(ctx, devtype:str = None):
+async def dev(ctx, devtype:str = None, id:str = None):
 
     # TLDR of these commands is for manually reviewing accounts and blocking well known people from getting targeted or prevent abuses
     # Data dumps will return a json of the specified username/person whether be discord or minecraft
@@ -63,7 +66,48 @@ async def dev(ctx, devtype:str = None):
         return
     
     if devtype.lower() == "help":
-        await ctx.send("No commands yet")
+        await ctx.send( "!dev (anycommand) wtd\n"
+                        "!dev dumprepdata (uuid)\n"
+                        "!dev getuuid (username)\n")
+        return
+    if devtype.lower() == "dumprepdata":
+        if id == None:
+            await ctx.send("please provide a minecraft uuid")
+            return
+        if id.lower() == "wtd":
+            await ctx.send("creates a json dump of the called minecraft uuid's rep data")
+            return
+        if id in playerreputationPlayerRep:
+            username = await pu.get_username_from_UUID(id) #if you have gotten here then the id has to be valid so no need to check it
+            formattedtimestampcalender = datetime.now().strftime("%B %d, %Y")
+            formattedtimestampclock = datetime.now().strftime("%H:%M:%S")
+            filenametimestamp = str(formattedtimestampcalender + " " + formattedtimestampclock).replace(" ", "_").replace(":", "_").replace(",", "")
+
+            getreadytodump = playerreputationPlayerRep[id]
+            jsonstring = json.dumps(getreadytodump, indent=4)
+
+            filedata = io.BytesIO(jsonstring.encode('utf-8'))
+
+            await ctx.send(
+                content=f"Raw Rep Data dump for {username}/{id}",
+                file=discord.File(filedata, filename=f"{username}_dump_{filenametimestamp}.json")
+            )
+            return
+        await ctx.send("No rep data found")
+        return
+    if devtype.lower() == "getuuid":
+        if id == None:
+            await ctx.send("provide a minecraft username")
+            return
+        if id.lower() == "wtd":
+            await ctx.send("retrieves the uuid of a minecraft username")
+            return        
+        uuid = await pu.get_UUID_from_username(id)
+        if uuid == ec.no_UUID_attached.get("errorcode"): #errorcode 201. skips 202 as it is very unlikely for 201 to trigger
+            await ctx.send("Please enter a valid username")
+            return
+        
+        await ctx.send(f"uuid for {id} is {uuid}")
         return
     await ctx.send("Unknown dev command")
 
