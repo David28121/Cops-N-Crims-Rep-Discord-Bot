@@ -1,2 +1,12 @@
-# Cops-N-Crims-Rep-Discord-Bot
-Hypixel CNC community driven reputation tracker
+Cops N Crims Player Reputation Tracker
+!!IN DEVELOPMENT!!
+Created by Daveed
+
+similar idea to the community created system in cs where you would leave +/- rep on players
+profiles so future players could check them
+
+To be added: 
+Website to check rep and report reasons
+overwatch system which will require a certain cops n crims level
+
+Have a problem message notdavid6686 on discord

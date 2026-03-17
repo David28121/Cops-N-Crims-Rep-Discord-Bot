@@ -1,0 +1,39 @@
+{
+    "PlayerReputation": {
+        "ExamplePlayerUUID": {
+            "Rep": 1,
+            "WhoHasRepped": {
+                "ExampleID1": {
+                    "timestamp": 12385471,
+                    "repstyle": "positive",
+                    "reason": "positive person"
+                },
+                "ExampleID2": {
+                    "timestamp": 12345124,
+                    "repstyle": "negative",
+                    "reason": "cheating and calling people slurs"
+                }
+            },
+            "SpecialTags": [
+                "Blacklisted",
+                "Confirmed Cheater",
+                "Manually Cleared",
+                "Dev/Dev Access"
+            ]
+        }
+    },
+    "PastReps": {
+        "ExampleID": {
+            "repagainstUUID123": {
+                "timestamp": 12903875,
+                "repstyle": "positive",
+                "reason": "positive person"
+            },
+            "repagainstUUID12351": {
+                "timestamp": 5832145,
+                "repstyle": "negative",
+                "reason": "cheating and calling people slurs"
+            }
+        }
+    }
+}

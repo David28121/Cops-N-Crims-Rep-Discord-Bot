@@ -1,0 +1,14 @@
+{
+    "LinkedDiscord": {
+        "ExampleUUID": "ExampleDiscordID"
+    },
+    "InvertedLinkedDiscord": {
+        "ExampleDiscordID": "ExampleUUID"
+    },
+    "AdministraionDiscordIDs":[
+        "ExampleID"
+    ],
+    "BlacklistedDiscordIDs":[
+        "ExampleID"
+    ]
+}
