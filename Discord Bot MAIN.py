@@ -143,6 +143,10 @@ async def linkaccount(ctx, username:str = None):
 
     linkeddiscord = await pu.get_linked_discord(uuid, Hypixel_API_Key)
 
+    if linkeddiscord == ec.invalid_hypixel_api_key.get("errorcode"): #errorcode 99
+        await ctx.send("Invalid Api Key, please message me at notdavid6686")
+        return
+
     if linkeddiscord == ec.no_player_found.get("errorcode"): #errorcode 102
         await ctx.send(f"{username} hasn't logged into hypixel")
         return
@@ -193,6 +197,11 @@ async def currentrep(ctx, username:str = None):
 
     if uuid not in playerreputationPlayerRep:
         realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
+
+        if realplayer == ec.invalid_hypixel_api_key.get("errorcode"): #errorcode 99
+            await ctx.send("Invalid Api Key, please message me at notdavid6686")
+            return
+
         if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
             await ctx.send(f"{username} is a nick or invalid hypixel player")
             return
@@ -238,12 +247,17 @@ async def rep(ctx, username:str = None, type:str = None,*, reason:str = None):
             if int(time.time()) < repexpires:
                 await ctx.send(f"You already have a outstanding {typeofrep} rep. Expires <t:{repexpires}:R>")
                 return
-    else:
-        realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
+        else:
+            realplayer = await pu.check_if_logged_into_hypixel(uuid, Hypixel_API_Key)
 
-        if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
-            await ctx.send(f"{username} is a nick or invalid hypixel player")
-            return
+            if realplayer == ec.invalid_hypixel_api_key.get("errorcode"): #errorcode 99
+                await ctx.send("Invalid Api Key, please message me at notdavid6686")
+                return
+
+            if realplayer == ec.no_player_found.get("errorcode"): #errorcode 102
+                await ctx.send(f"{username} is a nick or invalid hypixel player")
+                return            
+    else:
         playerreputationOutgoingReps[discordid] = {}
 
 

@@ -90,6 +90,10 @@ async def check_if_logged_into_hypixel(uuid:str, apiKey:str):
 
             data = await response.json()
 
+            if data.get("success") == False:
+                debug(ec.invalid_hypixel_api_key)
+                return 99
+
             if not data.get("player"):
                 debug(ec.no_player_found)
                 return 102
@@ -113,7 +117,10 @@ async def get_linked_discord(uuid:str, apiKey:str):
         async with session.get(requestLink) as response:
 
             data = await response.json()
-            realplayer = await check_if_logged_into_hypixel(uuid, apiKey)
+
+            if data.get("success") == False:
+                debug(ec.invalid_hypixel_api_key)
+                return 99
 
             if not data.get("player"):
                 debug(ec.no_player_found)

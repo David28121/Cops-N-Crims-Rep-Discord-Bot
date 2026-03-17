@@ -36,3 +36,9 @@ no_username_attached = {
     "disscription" : "No username found for provided UUID"
 }
 """error : 203"""
+
+invalid_hypixel_api_key = {
+    "errorcode" : 99,
+    "discription" : "Invalid api key, check if disabled"
+}
+"""error : 99"""
