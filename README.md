@@ -1,5 +1,5 @@
 Cops N Crims Player Reputation Tracker
-!!IN DEVELOPMENT!!
+
 Created by Daveed
 
 add to a server: https://discord.com/oauth2/authorize?client_id=1483234514623795331&permissions=68608&integration_type=0&scope=bot
